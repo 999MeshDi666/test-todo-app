@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+body{
+    padding: 0;
+    margin: 0;
+    background-color: #373434;
+    font-family: 'Open Sans', sans-serif;
+    color: #fff;
+}
+@for $i from 1 through 6{
+    h#{$i}{
+        margin: 0;
+        padding: 0;
+    }
+}
+p{
+    margin: 0;
+    padding: 0;
+}
+.container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.header{
+    background-color: #494949;
+    padding: 8px;
+    text-align: center;
+    text-transform: uppercase;
+    .headline{
+        font-size: 25px;
+    }
+}
+.todo_container{
+    display: flex;
+    margin-top: 15px;
+    flex-direction: column;
+    
+    .todo_section{
+        padding: 10px;
+        border: 1px dashed #000;
+        .todo_item{
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border: 1px dashed #000;
+            border-radius: 5px;
+            background-color: #ebebeb;
+            color: #000
+        }
+    }
+    .todo_on_hold{
+        background-color: rgb(37, 90, 182);
+
+    }
+    .todo_in_progress{
+        background-color:rgb(169, 127, 21);
+
+    }
+    .todo_finished{
+        background-color:  rgb(18, 87, 18);
+
+    }
+    
+}
+
+@media (min-width: 576px) { 
+    .container {
+        width: 540px;
+    }
+  
+    
+}
+
+
+@media (min-width: 768px) { 
+    .container {
+        width: 750px;
+    }
+ 
+}
+
+
+@media (min-width: 992px) { 
+    .container {
+        width: 970px;
+    }
+    .todo_container{
+        flex-direction: row;
+        .todo_section{
+            width: 100%;
+        }
+    }
+}
+
+
+@media (min-width: 1200px) {
+    .container {
+        width: 1170px;
+    }
+
+}
+
+
+@media (min-width: 1400px) { 
+
+}
