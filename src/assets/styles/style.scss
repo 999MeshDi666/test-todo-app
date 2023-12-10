@@ -52,12 +52,15 @@ button, input[type=submit]{
     display: flex;
     margin-top: 15px;
     flex-direction: column;
-    
+    .todo_section_disabled {
+        pointer-events: none;
+        opacity: 0.2;
+    }
     .todo_section{
         padding: 10px;
         border: 1px dashed #ffffff;
         border-radius: 8px;
-      
+        overflow:scroll;
         height: 30vh;
         .todo_item{
             display: flex;
@@ -66,6 +69,7 @@ button, input[type=submit]{
             border: 1px dashed #000;
             border-radius: 10px;
             background-color: #859ab9;  
+            margin-bottom: 10px;
             .todo_item_title{
                 text-transform: capitalize;
             }
@@ -217,6 +221,7 @@ button, input[type=submit]{
         .todo_section{
             width: 100%;
             height: 60vh;
+            overflow:hidden;
         }
         .todo_progress{
             background-color:rgb(230, 183, 53);

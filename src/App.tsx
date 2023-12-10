@@ -11,6 +11,7 @@ function App() {
   const { waiting, progress, finished } = useSelector(
     (state: RootState) => state.todo
   );
+  const [option, setOption] = useState("all");
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
 
@@ -24,45 +25,85 @@ function App() {
     dispatch(addItem(newTodo));
     setOpen(!open);
   };
-
+  const checkWaiting = option != "all" && option != "waiting";
+  const checkPogress = option != "all" && option != "progress";
+  const checkFinished = option != "all" && option != "finished";
   return (
     <>
       <main className="container">
         <header className="header">
           <h1 className="headline">Todo list</h1>
         </header>
-        <section>
-          <button className="default_button" onClick={() => setOpen(!open)}>
+        <div>
+          <button
+            className="default_button"
+            disabled={checkWaiting}
+            onClick={() => setOpen(!open)}
+          >
             Добавить задачу
           </button>
-        </section>
+          <div>
+            <select
+              value={option}
+              onChange={(event: React.ChangeEvent<HTMLSelectElement>) =>
+                setOption(event.target.value)
+              }
+            >
+              <option value="all">Все</option>
+              <option value="waiting">В ожидании</option>
+              <option value="progress">В процессе</option>
+              <option value="finished">Завершенные</option>
+            </select>
+          </div>
+        </div>
         <article className="todo_container">
-          <section className="todo_section todo_waiting">
-            {waiting.length > 0 ? (
-              waiting.map((todo: TTodoItem) => (
-                <TodoItem {...todo} nextStatus="progress" key={todo.id} />
-              ))
-            ) : (
-              <p>Ничего не найдено</p>
-            )}
+          <section
+            className={`todo_section todo_waiting ${
+              checkWaiting && "todo_section_disabled"
+            }`}
+          >
+            <p>Количество задачи в ожидании {waiting.length}</p>
+            <div>
+              {waiting.length > 0 ? (
+                waiting.map((todo: TTodoItem) => (
+                  <TodoItem {...todo} nextStatus="progress" key={todo.id} />
+                ))
+              ) : (
+                <p>Ничего не найдено</p>
+              )}
+            </div>
           </section>
-          <section className="todo_section todo_progress">
-            {progress.length > 0 ? (
-              progress.map((todo: TTodoItem) => (
-                <TodoItem {...todo} nextStatus="finished" key={todo.id} />
-              ))
-            ) : (
-              <p>Ничего не найдено</p>
-            )}
+          <section
+            className={`todo_section todo_progress ${
+              checkPogress && "todo_section_disabled"
+            } `}
+          >
+            <p>Количество задачи в работе {progress.length}</p>
+            <div>
+              {progress.length > 0 ? (
+                progress.map((todo: TTodoItem) => (
+                  <TodoItem {...todo} nextStatus="finished" key={todo.id} />
+                ))
+              ) : (
+                <p>Ничего не найдено</p>
+              )}
+            </div>
           </section>
-          <section className="todo_section todo_finished">
-            {finished.length > 0 ? (
-              finished.map((todo: TTodoItem) => (
-                <TodoItem {...todo} key={todo.id} />
-              ))
-            ) : (
-              <p>Ничего не найдено</p>
-            )}
+          <section
+            className={`todo_section todo_finished ${
+              checkFinished && "todo_section_disabled"
+            }`}
+          >
+            <p>Количество завершенных задач {finished.length}</p>
+            <div>
+              {finished.length > 0 ? (
+                finished.map((todo: TTodoItem) => (
+                  <TodoItem {...todo} key={todo.id} />
+                ))
+              ) : (
+                <p>Ничего не найдено</p>
+              )}
+            </div>
           </section>
         </article>
       </main>
