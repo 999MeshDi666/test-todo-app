@@ -15,22 +15,38 @@ export const todoSlice = createSlice({
         addItem: (state, action:PayloadAction<TTodoItem>)=>{
             state.waiting.push(action.payload)
         },
-        updateStatusItem: (state, action:PayloadAction<{item: TTodoItem, status: TodoStatus}>)=>{
-           const curItem = action.payload.item; 
+        editItem: (state, action:PayloadAction<TTodoItem>)=>{
+            
+            const item = action.payload
+            const editedList = state.waiting.map((elem)=>{
+                if(elem.id === item.id){
+                    return {
+                        ...elem,
+                        title: item.title,
+                        description: item.description
+                    }
+                }
+                return elem
+            })
+            state.waiting = editedList
+        },
+        updateStatusItem: (state, action:PayloadAction<{curItem: TTodoItem, nextStatus: TodoStatus}>)=>{
+           const {curItem, nextStatus} = action.payload; 
            const prevList = state[curItem.status].filter((elem)=> elem.id !== curItem.id);
            state[curItem.status] = prevList;
            const newItem = {
             ...curItem,
-            status: action.payload.status
+            status: nextStatus
            }
-           state[action.payload.status].push(newItem)
+           state[nextStatus].push(newItem)
         },
-        // deleteItem: (state, action:PayloadAction<string|number>)=>{
-        //     const newList = state.list.filter((elem)=> elem.id !== action.payload);
-        //     state.list = newList;
-        // }
+        deleteItem: (state, action:PayloadAction<{id: string|number, curStatus: TodoStatus }>)=>{
+            const {id, curStatus} = action.payload
+            const newList = state[curStatus].filter((elem)=> elem.id !== id);
+            state[curStatus] = newList;
+        }
      
     }
 })
-export const {addItem, updateStatusItem} = todoSlice.actions;
+export const {addItem, updateStatusItem, deleteItem, editItem} = todoSlice.actions;
 export default todoSlice.reducer;
