@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 
 type TodoFormProps = {
   onConfirm: (title: string, desc: string) => void;
-  defaultTitle?: string;
-  defaultDesc?: string;
+  defaultTitle: string;
+  defaultDesc: string;
 };
 const TodoForm = ({
   onConfirm,
@@ -11,7 +11,7 @@ const TodoForm = ({
   defaultTitle = "",
 }: TodoFormProps) => {
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState(defaultTitle);
   const [isTitleValid, setIsTitleValid] = useState(false);
   const [isDescValid, setIsDescValid] = useState(false);
 
@@ -39,7 +39,7 @@ const TodoForm = ({
           id="title"
           name="title"
           type="text"
-          value={title}
+          value={title || defaultTitle}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setTitle(event.target.value);
           }}
@@ -56,7 +56,7 @@ const TodoForm = ({
           className="input-textarea"
           id="desc"
           name="description"
-          value={description}
+          value={description || defaultDesc}
           onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
             setDescription(event.target.value);
           }}

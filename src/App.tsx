@@ -6,6 +6,7 @@ import TodoForm from "./components/Todo/TodoForm";
 import { useState } from "react";
 import ModalWindow from "./components/ModalWindow";
 import { addItem } from "./redux/slices/todoSlice";
+import KanbanSection from "./components/KanbanSection";
 
 function App() {
   const { waiting, progress, finished } = useSelector(
@@ -26,7 +27,7 @@ function App() {
     setOpen(!open);
   };
   const checkWaiting = option != "all" && option != "waiting";
-  const checkPogress = option != "all" && option != "progress";
+  const checkProgress = option != "all" && option != "progress";
   const checkFinished = option != "all" && option != "finished";
   return (
     <>
@@ -57,54 +58,23 @@ function App() {
           </div>
         </div>
         <article className="todo_container">
-          <section
-            className={`todo_section todo_waiting ${
-              checkWaiting && "todo_section_disabled"
-            }`}
-          >
-            <p>Количество задачи в ожидании {waiting.length}</p>
-            <div>
-              {waiting.length > 0 ? (
-                waiting.map((todo: TTodoItem) => (
-                  <TodoItem {...todo} nextStatus="progress" key={todo.id} />
-                ))
-              ) : (
-                <p>Ничего не найдено</p>
-              )}
-            </div>
-          </section>
-          <section
-            className={`todo_section todo_progress ${
-              checkPogress && "todo_section_disabled"
-            } `}
-          >
-            <p>Количество задачи в работе {progress.length}</p>
-            <div>
-              {progress.length > 0 ? (
-                progress.map((todo: TTodoItem) => (
-                  <TodoItem {...todo} nextStatus="finished" key={todo.id} />
-                ))
-              ) : (
-                <p>Ничего не найдено</p>
-              )}
-            </div>
-          </section>
-          <section
-            className={`todo_section todo_finished ${
-              checkFinished && "todo_section_disabled"
-            }`}
-          >
-            <p>Количество завершенных задач {finished.length}</p>
-            <div>
-              {finished.length > 0 ? (
-                finished.map((todo: TTodoItem) => (
-                  <TodoItem {...todo} key={todo.id} />
-                ))
-              ) : (
-                <p>Ничего не найдено</p>
-              )}
-            </div>
-          </section>
+          <KanbanSection
+            list={waiting}
+            disabled={checkWaiting}
+            status="waiting"
+            nextStatus="progress"
+          />
+          <KanbanSection
+            list={progress}
+            disabled={checkProgress}
+            status="progress"
+            nextStatus="finished"
+          />
+          <KanbanSection
+            list={finished}
+            disabled={checkFinished}
+            status="finished"
+          />
         </article>
       </main>
       <ModalWindow

@@ -72,6 +72,10 @@ button, input[type=submit]{
             margin-bottom: 10px;
             .todo_item_title{
                 text-transform: capitalize;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                width: 80px;
             }
          
             .todo_item_button_container{
@@ -194,11 +198,6 @@ button, input[type=submit]{
     }
 }
 
-@media (min-width: 576px) { 
-    .container {
-        width: 540px;
-    }  
-}
 
 
 @media (min-width: 768px) { 
@@ -220,7 +219,7 @@ button, input[type=submit]{
         flex-direction: row;
         .todo_section{
             width: 100%;
-            height: 60vh;
+            height: 70vh;
             overflow:hidden;
         }
         .todo_progress{
@@ -232,21 +231,3 @@ button, input[type=submit]{
   
 }
 
-
-@media (min-width: 1200px) {
-    .container {
-        width: 1170px;
-    }
-    .todo_container{
-        
-        .todo_section{
-            height: 80vh;
-        }
-    
-    }
-}
-
-
-@media (min-width: 1400px) { 
-
-}
