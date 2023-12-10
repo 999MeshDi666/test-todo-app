@@ -19,6 +19,7 @@ const TodoItem = (todo: TodoItemProps) => {
   const [openView, setOpenView] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const { id, title, description, status, nextStatus } = todo;
+
   const dispatch = useDispatch();
   const handelDeleteItem = () => {
     dispatch(deleteItem({ id: id, curStatus: status }));
@@ -107,7 +108,11 @@ const TodoItem = (todo: TodoItemProps) => {
         handleOpen={() => setOpenEdit(!openEdit)}
         title="Редактирование задачи"
       >
-        <TodoForm onConfirm={handleEditItem} />
+        <TodoForm
+          onConfirm={handleEditItem}
+          defaultTitle={title}
+          defaultDesc={description}
+        />
       </ModalWindow>
     </>
   );
